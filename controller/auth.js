@@ -4,8 +4,12 @@ const { SIGN, VERIFY } = require('../utils/jwt')
 const sha256 = require('sha256')
 const path = require('path')
 const jwt = require('jsonwebtoken')
-const { COMMENT } = require('../models/comment.model')
-const { UpDateById, SelectVideoById } = require('../models/update.model')
+const { COMMENT, COMMENTDeleteById } = require('../models/comment.model')
+const {
+  UpDateById,
+  SelectVideoById,
+  DELETEVideo,
+} = require('../models/update.model')
 module.exports = {
   REG: async (req, res) => {
     try {
@@ -91,6 +95,11 @@ module.exports = {
         SelectVideoById,
         req.params.id
       )
+      if (!VERIFY(req.headers.token))
+        return res.send({
+          status: 401,
+          message: 'Your token has expired. Please try again later.',
+        })
       const { userid } = VERIFY(token)
       let update = await fetch(
         UpDateById,
@@ -100,23 +109,52 @@ module.exports = {
         req.params.id,
         userid
       )
-      if (update) {
-        res.send({
-          status: 200,
-          message:
-            'update video title: ' +
-            VideoTitle +
-            ' categoryId : ' +
-            VideoCategoriesId +
-            ' sap_category ' +
-            VideoSap_categoryId,
-        })
-      }
+      res.send({
+        status: 200,
+        message:
+          'update video title: ' +
+          VideoTitle +
+          ' categoryId : ' +
+          VideoCategoriesId +
+          ' sap_category ' +
+          VideoSap_categoryId,
+      })
+    } catch (error) {
+      res.send({ status: 404, message: error.message })
+    }
+  },
+  DELETEById: async (req, res) => {
+    try {
+      let { token } = req.headers
       if (!VERIFY(req.headers.token))
         return res.send({
           status: 401,
-          message: 'you must send max 50 mb file',
+          message: 'Your token has expired. Please try again later.',
         })
+      const { userid } = VERIFY(token)
+      await fetch(DELETEVideo, userid, req.params.id)
+      res.send({
+        status: 200,
+        message: 'DELETE video',
+      })
+    } catch (error) {
+      res.send({ status: 404, message: error.message })
+    }
+  },
+  CommentDelete: async (req, res) => {
+    try {
+      let { token } = req.headers;
+      if (!VERIFY(req.headers.token))
+        return res.send({
+          status: 401,
+          message: 'Your token has expired. Please try again later.',
+        })
+      const { userid } = VERIFY(token)
+      await fetch(COMMENTDeleteById, userid, req.params.id)
+      res.send({
+        status: 200,
+        message: 'DELETE Comment',
+      })
     } catch (error) {
       res.send({ status: 404, message: error.message })
     }
