@@ -89,7 +89,7 @@ module.exports = {
   },
   UPDATE: async (req, res) => {
     try {
-      let { token } = req.headers
+      let { token } = req.headers;
       let { VideoTitle, VideoCategoriesId, VideoSap_categoryId } = req.body
       let [{ title, categoriesid, sap_categoryid }] = await fetch(
         SelectVideoById,
@@ -178,4 +178,4 @@ module.exports = {
       res.send({ status: 404, message: error.message })
     }
   },
-}
+};

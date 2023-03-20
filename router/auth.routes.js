@@ -18,6 +18,6 @@ auth.post('/videos', UPLOAD)
 auth.put('/videos/:id', UPDATE)
 auth.delete('/videos/:id', DELETEById)
 auth.get("/check", CHECK);
-auth.get('/comments', COMMENT)
+auth.post('/comments', COMMENT)
 auth.delete('/comments/:id', CommentDelete)
 module.exports = { auth };
