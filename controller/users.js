@@ -23,19 +23,17 @@ module.exports = {
       })
     }
   },
-}
-// const { fetch, fetchAll, fetchVideo } = require('../database/pg')
-// const { SELECTID, SELECTALL } = require('../models/users.model')
-// const { SAP, SAPID, SPAINFO, SAPUSER } = require('../models/sap.categor')
-// const { VIDEOS } = require('../models/video.model')
-
+};
+// const { fetch, fetchAll, fetchVideo } = require('../database/pg');
+// const { SELECTID, SELECTALL } = require('../models/users.model');
+// const { SAP, SAPID, SPAINFO, SAPUSER } = require('../models/sap.categor');
+// const { VIDEOS } = require('../models/video.model');
 // module.exports = {
 //   GET: async (req, res) => {
 //     if (req.params.videoID) {
 //       let a = await fetch(SPAINFO, req.params.videoID)
 //       let b = await fetch(SAPUSER, req.params.videoID)
 //       let video = await fetch(SAPID, req.params.title, req.params.videoID)
-
 //       res.send({
 //         data: video[0],
 //         videoInfo: b[0]['username'] ? b[0]['username'] : 'something',
