@@ -102,6 +102,3 @@ INSERT INTO comments (userId, videoId, comment) VALUES
   (7, 3, 'Can you recommend any additional resources for learning more about this topic?'),
   (8, 4, 'I loved your approach to teaching Python, it made the language seem less intimidating.'),
   (9, 5, 'This was a great overview of the design principles, thank you!');
-
-
-
