@@ -2,35 +2,31 @@ module.exports = {
   SAP: `SELECT sap_category.* FROM sap_category JOIN categories ON sap_category.catRefid = categories.catId WHERE categories.catName = $1;`,
   SAPALL: 'SELECT * FROM sap_category',
   SAPID: `
-SELECT *
+SELECT v.*, s.sapName
 FROM videos v
-JOIN sap_category sc ON v.sap_categoryId = sc.spaId
-JOIN categories c ON v.categoriesId = c.catId
-WHERE sc.sapName = $1
-AND v.videoId = $2;
+JOIN sap_category s ON v.sap_categoryId = s.spaId
+WHERE s.sapName =$1
+AND v.videoId =$2;
+
 `,
+  SPAINFO: `
+  SELECT comment
+FROM videos v
+JOIN comments cm ON v.videoId = cm.videoid
+WHERE  v.videoId = $1;
+  `,
+  SAPUSER: `
+  SELECT u.username
+FROM videos v
+JOIN users u ON v.userId = u.userId
+WHERE v.videoId = $1;
+  `,
 }
-//   SELECT sc.*, v.*, c.comment, u.username
-// FROM sap_category sc
-// LEFT JOIN videos v ON sc.spaId = v.sap_categoryId
-// LEFT JOIN comments c ON v.videoId = c.videoId
-// INNER JOIN users u ON c.userId = u.userId
-// WHERE sc.sapName = $1
-// AND v.videoId = $2;
 
-// SELECT v.videoId, v.userId, v.title, v.date, v.categoryId, s.sapName
+// SELECT *
 // FROM videos v
-//     JOIN sap_category s ON v.sapId = s.sapId
-// WHERE v.videoId = $1SELECT v.videoId, v.userId, v.title, v.date, v.categoryId, s.sapName
-// FROM videos v
-// JOIN sap_category s ON v.sapId = s.sapId
-// WHERE v.categoryId = s;
-
-
-// SELECT sap_category.*, videos.*, comments.comment, users.username
-//  FROM sap_category
-//  LEFT JOIN videos ON sap_category.spaId = videos.sap_categoryId
-//  LEFT JOIN comments ON videos.videoId = comments.videoId
-//  INNER JOIN users ON comments.userId = users.userId
-//  WHERE sap_category.sapName = $1
-//  AND videos.videoId = $2;
+// JOIN sap_category sc ON v.sap_categoryId = sc.spaId
+// JOIN categories c ON v.categoriesId = c.catId
+// JOIN comments cm ON v.videoId = cm.videoId
+// WHERE sc.sapName =$1
+//   AND v.videoId = $2;
